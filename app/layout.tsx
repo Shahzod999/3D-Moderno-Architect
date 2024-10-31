@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
+import PrimarySearchAppBar from "./components/PrimarySearchAppBar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,7 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <PrimarySearchAppBar />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );

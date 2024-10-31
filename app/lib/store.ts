@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import modalCardToggleSlice from "./features/modalCardToggleSlice";
+import userInfoSlice from "./features/userInfoSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      modalToggle: modalCardToggleSlice,
+      userInfo: userInfoSlice,
     },
   });
 };

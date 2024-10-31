@@ -1,0 +1,67 @@
+import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
+import { ErrorState, UserState } from "../../type/UserTypes";
+
+interface DataState {
+  username: string;
+  email: string;
+  password: string;
+  _id?: string;
+}
+
+interface LogoutResponse {
+  message: string;
+}
+
+export const userApi = createApi({
+  reducerPath: "userApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "/belcor/user" }),
+  tagTypes: ["UserProfile"],
+  endpoints: (builder) => ({
+    registerUser: builder.mutation<UserState, DataState | ErrorState>({
+      query: (data) => ({
+        url: "",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["UserProfile"],
+    }),
+    loginUser: builder.mutation<UserState, DataState | ErrorState>({
+      query: (data) => ({
+        url: "/auth",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["UserProfile"],
+    }),
+
+    getProfileUser: builder.query<UserState, void>({
+      query: () => ({
+        url: "/profile",
+      }),
+      providesTags: ["UserProfile"],
+    }),
+
+    updateUserProfile: builder.mutation<UserState, DataState>({
+      query: (data) => ({
+        url: "/profile",
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["UserProfile"],
+    }),
+    logOutUser: builder.mutation<LogoutResponse, void>({
+      query: () => ({
+        url: "/logout",
+        method: "POST",
+      }),
+    }),
+  }),
+});
+
+export const {
+  useGetProfileUserQuery,
+  useUpdateUserProfileMutation,
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useLogOutUserMutation,
+} = userApi;

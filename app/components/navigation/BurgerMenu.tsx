@@ -24,15 +24,15 @@ const BurgerMenu = ({ open }: { open: boolean }) => {
   const icons: Icons = {
     Portfolio: {
       icon: <BusinessCenterIcon />,
-      path: "/portfolio",
+      path: "/publicRoot/portfolio",
     },
     Design: {
       icon: <DesignServicesIcon />,
-      path: "/design",
+      path: "/publicRoot/design",
     },
     About: {
       icon: <AutoStoriesIcon />,
-      path: "/about",
+      path: "/publicRoot/about",
     },
   };
 

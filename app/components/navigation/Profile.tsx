@@ -9,8 +9,13 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Link from "next/link";
+import { deleteSession } from "@/app/lib/session";
 
 const userInfo = false;
+
+const handleLogOut = () => {
+  deleteSession();
+};
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -53,10 +58,14 @@ const Profile = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
       sx={{ mt: 5 }}>
-      <Link href="/info/auth">
+      <Link href="/protectedPages/profile">
         <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       </Link>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+
+      <Link href="/protectedPages/user">
+        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      </Link>
+      <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -77,25 +86,33 @@ const Profile = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
       sx={{ mt: 5 }}>
-      <MenuItem>
-        <IconButton size="large" aria-label="show 0 new mails" color="inherit">
-          <Badge badgeContent={0} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 0 new notifications"
-          color="inherit">
-          <Badge badgeContent={0} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+      <Link href="/protectedPages/user">
+        <MenuItem>
+          <IconButton
+            size="large"
+            aria-label="show 0 new mails"
+            color="inherit">
+            <Badge badgeContent={0} color="error">
+              <MailIcon />
+            </Badge>
+          </IconButton>
+          <p>Messages</p>
+        </MenuItem>
+      </Link>
+      <Link href="/protectedPages/user">
+        <MenuItem>
+          <IconButton
+            size="large"
+            aria-label="show 0 new notifications"
+            color="inherit">
+            <Badge badgeContent={0} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>
+      </Link>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
