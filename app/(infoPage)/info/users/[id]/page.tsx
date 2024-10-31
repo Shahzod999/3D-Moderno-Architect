@@ -1,9 +1,12 @@
 import React from "react";
+interface PageProps {
+  params: { id: any };
+}
 
-const Page = ({ params }: { params: { id: string } }) => {
-  console.log(params);
-
+const Page = ({ params }: PageProps) => {
   const { id } = params;
+  console.log(typeof id);
+
   return <div>User details {id}</div>;
 };
 
