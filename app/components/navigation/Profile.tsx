@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import MailIcon from "@mui/icons-material/Mail";
-import { Badge, Divider } from "@mui/material";
+import { Badge } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";

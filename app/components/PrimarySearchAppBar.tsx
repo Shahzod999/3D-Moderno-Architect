@@ -7,18 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-
 import MenuIcon from "@mui/icons-material/Menu";
-
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-
-import { Badge } from "@mui/material";
-
 import BurgerMenu from "./navigation/BurgerMenu";
 import Profile from "./navigation/Profile";
 import SearchComponent from "./navigation/SearchComponent";
@@ -48,15 +37,9 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-
-
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
-
-
-
-
 
   return (
     <Box sx={{ display: "flex" }}>

@@ -1,5 +1,3 @@
-import { Metadata } from "next";
-import Link from "next/link";
 import React from "react";
 import PrimarySearchAppBar from "../components/PrimarySearchAppBar";
 
