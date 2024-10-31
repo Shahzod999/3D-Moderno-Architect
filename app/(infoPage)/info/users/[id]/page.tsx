@@ -1,6 +1,12 @@
 import React from "react";
 
-const page = ({ params }: { params: { id: string } }) => {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+const page: React.FC<PageProps> = ({ params }) => {
   const { id } = params;
   return <div>User details {id}</div>;
 };
