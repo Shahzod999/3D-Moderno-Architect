@@ -6,13 +6,13 @@ const Users = () => {
     <div>
       <ul>
         <li>
-          <Link href="/dashboard/users/1">1</Link>
+          <Link href="/info/users/1">1</Link>
         </li>
         <li>
-          <Link href="/dashboard/users/2">2</Link>
+          <Link href="/info/users/2">2</Link>
         </li>
         <li>
-          <Link href="/dashboard/users/3">3</Link>
+          <Link href="/info/users/3">3</Link>
         </li>
       </ul>
     </div>

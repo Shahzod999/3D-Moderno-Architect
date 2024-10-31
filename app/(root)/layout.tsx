@@ -1,18 +1,12 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
+import PrimarySearchAppBar from "../components/PrimarySearchAppBar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <h1>Root Layout</h1>
-      <ul>
-        <li>
-          <Link href="/dashboard/users">users</Link>
-        </li>
-        <li>
-          <Link href="/dashboard/analytics">analytics</Link>
-        </li>
-      </ul>
+      <PrimarySearchAppBar  />
       {children}
     </div>
   );
