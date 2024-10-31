@@ -4,7 +4,7 @@ interface PageProps {
   params: { id: string };
 }
 
-const Page = async ({ params }: PageProps) => {
+const Page = ({ params }: PageProps) => {
   const { id } = params;
 
   return <div>User details {id}</div>;
