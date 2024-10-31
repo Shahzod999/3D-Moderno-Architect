@@ -9,13 +9,8 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Link from "next/link";
-import { deleteSession } from "@/app/lib/session";
 
 const userInfo = false;
-
-const handleLogOut = () => {
-  deleteSession();
-};
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -65,7 +60,6 @@ const Profile = () => {
       <Link href="/protectedPages/user">
         <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       </Link>
-      <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
     </Menu>
   );
 
