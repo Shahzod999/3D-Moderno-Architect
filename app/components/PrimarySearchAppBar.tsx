@@ -1,6 +1,6 @@
 "use client";
-import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import React, { useState } from "react";
+import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,42 +11,25 @@ import MenuIcon from "@mui/icons-material/Menu";
 import BurgerMenu from "./navigation/BurgerMenu";
 import Profile from "./navigation/Profile";
 import SearchComponent from "./navigation/SearchComponent";
+import Link from "next/link";
 
-const drawerWidth = 240;
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
-  open?: boolean;
-}>(({ theme, open }) => ({
-  flexGrow: 1,
-  padding: theme.spacing(3),
-  transition: theme.transitions.create("margin", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginLeft: `-${drawerWidth}px`,
-  ...(open && {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  }),
-}));
-
-export default function PersistentDrawerLeft() {
+export default function PrimarySearchAppBar() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", backgroundColor: "rgba(30,26,22)" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
-        sx={{ zIndex: theme.zIndex.drawer + 1, backgroundColor: "#377d4a" }}>
+        sx={{
+          zIndex: theme.zIndex.drawer + 1,
+          backgroundColor: "rgba(30,26,22)",
+        }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -55,11 +38,21 @@ export default function PersistentDrawerLeft() {
             aria-label="open drawer"
             sx={{ mr: 2 }}
             onClick={handleDrawerToggle}>
-            <MenuIcon />
+            <MenuIcon sx={{ fontSize: 35 }} />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" fontWeight={900}>
-            Moderno Architect
-          </Typography>
+          <Link href="/">
+            <Typography
+              variant="h4"
+              noWrap
+              fontWeight={900}
+              sx={{
+                letterSpacing: 1.5,
+                display: { xs: "none", sm: "block" },
+                p: 3,
+              }}>
+              Moderno Architect
+            </Typography>
+          </Link>
 
           <SearchComponent />
 
@@ -70,11 +63,6 @@ export default function PersistentDrawerLeft() {
       </AppBar>
 
       <BurgerMenu open={open} />
-
-      <Main open={open}>
-        <Toolbar />
-        <Typography paragraph>Content goes here...</Typography>
-      </Main>
     </Box>
   );
 }

@@ -1,9 +1,9 @@
-import React from "react";
+import PrimarySearchAppBar from "../components/PrimarySearchAppBar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <h1>Dashboard 2</h1>
+      <PrimarySearchAppBar />
       {children}
     </div>
   );

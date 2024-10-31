@@ -49,7 +49,7 @@ const BurgerMenu = ({ open }: { open: boolean }) => {
       variant="persistent"
       anchor="left"
       open={open}>
-      <Divider sx={{ marginTop: "56px" }} />
+      <Divider sx={{ marginTop: { xs: "50px", sm: "80px" } }} />
 
       <List>
         {Object.keys(icons).map((text) => (
