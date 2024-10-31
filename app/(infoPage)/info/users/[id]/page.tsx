@@ -6,9 +6,9 @@ interface PageProps {
   };
 }
 
-const page: React.FC<PageProps> = ({ params }) => {
+const Page: React.FC<PageProps> = ({ params }) => {
   const { id } = params;
   return <div>User details {id}</div>;
 };
 
-export default page;
+export default Page;
