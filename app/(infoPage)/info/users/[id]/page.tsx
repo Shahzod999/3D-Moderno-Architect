@@ -4,10 +4,8 @@ interface PageProps {
   params: { id: string };
 }
 
-type tParams = Promise<{ params: { id: string } }>;
-
-const Page = async({ params }: tParams) => {
-  const { id } =  await params;
+const Page = async ({ params }: PageProps) => {
+  const { id } = params;
 
   return <div>User details {id}</div>;
 };
