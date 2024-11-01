@@ -40,38 +40,31 @@ export async function login(data: FormInput) {
     }
 
     await createSession(user._id);
-    // return { success: true };
+    return { success: true };
   } catch (error) {
     console.error("Ошибка при входе:", error);
     return {
       errors: "Произошла ошибка при входе. Пожалуйста, попробуйте позже."
     };
   }
-  redirect("/");
 }
-
 
 export async function logout() {
   await deleteSession();
-  redirect("/");
+  redirect("/publicRoot/auth");
 }
-
 
 export async function register(data: FormInput) {
   try {
     await connectToDatabase();
-
     const { username, email, password } = data;
-
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return {
         errors: "Пользователь с таким email уже существует."
       };
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const newUser = new User({
       username,
       email,
@@ -80,16 +73,13 @@ export async function register(data: FormInput) {
 
     await newUser.save();
     await createSession(newUser._id);
-
-    // return { success: true };
-
+    return { success: true };
   } catch (error) {
     console.error("Ошибка при регистрации:", error);
     return {
       errors: "Произошла ошибка при регистрации. Пожалуйста, попробуйте позже."
     };
   }
-  redirect("/");
 }
 
 

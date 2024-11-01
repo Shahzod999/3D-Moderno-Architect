@@ -6,6 +6,7 @@ import { login } from "../../../lib/actions/authAction";
 import { registerUser } from "@/lib/actions/registerAction";
 import { useAppDispatch } from "@/lib/hooks";
 import { userLogIn } from "@/lib/features/userInfoSlice";
+import { useRouter } from "next/navigation";
 
 interface FormInput {
   username?: string;
@@ -14,9 +15,11 @@ interface FormInput {
 }
 
 const AuthPage = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [value, setValue] = useState<number>(0);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -25,18 +28,23 @@ const AuthPage = () => {
   } = useForm<FormInput>();
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    console.log("start");
+    setIsLoading(true);
+    setAuthError(null);
     try {
       const response = value === 0 ? await login(data) : await registerUser(data);
 
       if (response?.errors) {
         return setAuthError(response?.errors);
+      } else if (response?.success) {
+        console.log("User logged in successfully");
+        dispatch(userLogIn());
+        router.push("/");
       }
-      console.log("User logged in successfully");
-      dispatch(userLogIn());
     } catch (error) {
       console.error("Ошибка в onSubmit:", error);
       setAuthError("Произошла ошибка при отправке формы.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -151,7 +159,7 @@ const AuthPage = () => {
           )}
           <Box textAlign="center">
             <Button variant="contained" sx={{ backgroundColor: "rgba(30,26,22)" }} type="submit">
-              {value === 0 ? "Войти" : "Зарегистрироваться"}
+              {isLoading ? "Загрузка..." : value === 0 ? "Войти" : "Зарегистрироваться"}
             </Button>
           </Box>
         </Box>

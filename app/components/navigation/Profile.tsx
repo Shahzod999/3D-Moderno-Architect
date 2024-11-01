@@ -16,7 +16,6 @@ import FolderSharedIcon from "@mui/icons-material/FolderShared";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
-
   const userInfo = useAppSelector(selectedStatusUser);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
@@ -42,7 +41,7 @@ const Profile = () => {
   };
 
   const handleLogOut = async () => {
-    await logout();
+    logout();
     dispatch(userLogOut());
   };
 
