@@ -1,6 +1,5 @@
-
 const Page = () => {
-  return <div>here i will ann new products</div>;
+  return <div>here i will add new products</div>;
 };
 
 export default Page;
