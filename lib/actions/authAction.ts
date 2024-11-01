@@ -13,11 +13,6 @@ type FormInput = {
   password: string;
 };
 
-const testUser = {
-  id: "1",
-  email: "admin@admin.com",
-  password: "12345678",
-};
 
 export async function login(data: FormInput) {
   try {

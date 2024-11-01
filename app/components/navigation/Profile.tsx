@@ -12,7 +12,6 @@ import Link from "next/link";
 import { logout } from "@/lib/actions/authAction";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { selectedStatusUser, userLogOut } from "@/lib/features/userInfoSlice";
-import FolderSharedIcon from "@mui/icons-material/FolderShared";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
