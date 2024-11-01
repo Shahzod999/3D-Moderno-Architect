@@ -33,6 +33,8 @@ const AuthPage = () => {
     try {
       const response = value === 0 ? await login(data) : await registerUser(data);
 
+      console.log(response);
+
       if (response?.errors) {
         return setAuthError(response?.errors);
       } else if (response?.success) {
