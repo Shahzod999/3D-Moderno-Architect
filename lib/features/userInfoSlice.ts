@@ -1,4 +1,3 @@
-"use client"
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
@@ -7,7 +6,7 @@ export interface toggleCard {
 }
 
 const initialState: toggleCard = {
-  status: JSON.parse(localStorage.getItem("userLogin") || "false"),
+  status: false,
 };
 
 export const userInfoSlice = createSlice({
