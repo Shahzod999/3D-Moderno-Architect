@@ -9,12 +9,17 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Link from "next/link";
-
+import { logout } from "@/lib/actions/authAction";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { selectedStatusUser, userLogOut } from "@/lib/features/userInfoSlice";
+import FolderSharedIcon from "@mui/icons-material/FolderShared";
 
 const Profile = () => {
+  const dispatch = useAppDispatch();
+
+  const userInfo = useAppSelector(selectedStatusUser);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -35,6 +40,14 @@ const Profile = () => {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleLogOut = async () => {
+    await logout();
+    dispatch(userLogOut());
+  };
+
+  console.log(userInfo, "info");
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -52,9 +65,13 @@ const Profile = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
       sx={{ mt: 5 }}>
-      <Link href="/protectedPages/profile">
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      </Link>
+      {userInfo ? (
+        <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+      ) : (
+        <Link href="/protectedPages/profile">
+          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+        </Link>
+      )}
 
       <Link href="/protectedPages/user">
         <MenuItem onClick={handleMenuClose}>My account</MenuItem>
@@ -81,10 +98,7 @@ const Profile = () => {
       sx={{ mt: 5 }}>
       <Link href="/protectedPages/user">
         <MenuItem>
-          <IconButton
-            size="large"
-            aria-label="show 0 new mails"
-            color="inherit">
+          <IconButton size="large" aria-label="show 0 new mails" color="inherit">
             <Badge badgeContent={0} color="error">
               <MailIcon />
             </Badge>
@@ -94,10 +108,7 @@ const Profile = () => {
       </Link>
       <Link href="/protectedPages/user">
         <MenuItem>
-          <IconButton
-            size="large"
-            aria-label="show 0 new notifications"
-            color="inherit">
+          <IconButton size="large" aria-label="show 0 new notifications" color="inherit">
             <Badge badgeContent={0} color="error">
               <NotificationsIcon />
             </Badge>
@@ -107,12 +118,7 @@ const Profile = () => {
       </Link>
 
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit">
+        <IconButton size="large" aria-label="account of current user" aria-controls="primary-search-account-menu" aria-haspopup="true" color="inherit">
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
@@ -128,34 +134,18 @@ const Profile = () => {
             <MailIcon />
           </Badge>
         </IconButton>
-        <IconButton
-          size="large"
-          aria-label="show 0 new notifications"
-          color="inherit">
+        <IconButton size="large" aria-label="show 0 new notifications" color="inherit">
           <Badge badgeContent={0} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <IconButton
-          size="large"
-          edge="end"
-          aria-label="account of current user"
-          aria-controls={menuId}
-          aria-haspopup="true"
-          onClick={handleProfileMenuOpen}
-          color="inherit">
+        <IconButton size="large" edge="end" aria-label="account of current user" aria-controls={menuId} aria-haspopup="true" onClick={handleProfileMenuOpen} color="inherit">
           <AccountCircle />
         </IconButton>
       </Box>
 
       <Box sx={{ display: { xs: "flex", md: "none" } }}>
-        <IconButton
-          size="large"
-          aria-label="show more"
-          aria-controls={menuId}
-          aria-haspopup="true"
-          onClick={handleMobileMenuOpen}
-          color="inherit">
+        <IconButton size="large" aria-label="show more" aria-controls={menuId} aria-haspopup="true" onClick={handleMobileMenuOpen} color="inherit">
           <MoreIcon />
         </IconButton>
       </Box>

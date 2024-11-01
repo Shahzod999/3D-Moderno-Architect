@@ -1,26 +1,23 @@
 "use client";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Paper,
-  Tabs,
-  Tab,
-} from "@mui/material";
-import { login } from "./actions";
+import { TextField, Button, Typography, Box, Paper, Tabs, Tab } from "@mui/material";
+import { login } from "../../../lib/actions/authAction";
+import { registerUser } from "@/lib/actions/registerAction";
+import { useAppDispatch } from "@/lib/hooks";
+import { userLogIn } from "@/lib/features/userInfoSlice";
 
 interface FormInput {
-  name?: string;
+  username?: string;
   email: string;
   password: string;
 }
 
 const AuthPage = () => {
+  const dispatch = useAppDispatch();
   const [value, setValue] = useState<number>(0);
-  const [loginError, setLoginError] = useState<string | null>(null);
+  const [authError, setAuthError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -28,16 +25,24 @@ const AuthPage = () => {
   } = useForm<FormInput>();
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    const response = await login(data); // Sending data to login function
-    if (response?.errors) {
-      console.log(response.errors);
-      setLoginError(response.errors.email[0]); // You can handle errors here
+    console.log("start");
+    try {
+      const response = value === 0 ? await login(data) : await registerUser(data);
+
+      if (response?.errors) {
+        return setAuthError(response?.errors);
+      }
+      console.log("User logged in successfully");
+      dispatch(userLogIn());
+    } catch (error) {
+      console.error("Ошибка в onSubmit:", error);
+      setAuthError("Произошла ошибка при отправке формы.");
     }
-    console.log(data);
   };
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    setAuthError(null);
   };
 
   return (
@@ -105,15 +110,7 @@ const AuthPage = () => {
             </>
           ) : (
             <>
-              <TextField
-                label="Имя"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                {...register("name", { required: "Это поле обязательно" })}
-                error={!!errors.name}
-                helperText={errors.name ? errors.name.message : ""}
-              />
+              <TextField label="Имя" variant="outlined" fullWidth margin="normal" {...register("username", { required: "Это поле обязательно" })} error={!!errors.username} helperText={errors.username ? errors.username.message : ""} />
               <TextField
                 label="Электронная почта"
                 variant="outlined"
@@ -147,16 +144,13 @@ const AuthPage = () => {
               />
             </>
           )}
-          {loginError && (
+          {authError && (
             <Typography color="error" align="center" sx={{ mt: 2 }}>
-              {loginError}
+              {authError}
             </Typography>
           )}
           <Box textAlign="center">
-            <Button
-              variant="contained"
-              sx={{ backgroundColor: "rgba(30,26,22)" }}
-              type="submit">
+            <Button variant="contained" sx={{ backgroundColor: "rgba(30,26,22)" }} type="submit">
               {value === 0 ? "Войти" : "Зарегистрироваться"}
             </Button>
           </Box>
