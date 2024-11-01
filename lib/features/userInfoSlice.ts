@@ -6,7 +6,7 @@ export interface toggleCard {
 }
 
 const initialState: toggleCard = {
-  status: JSON.parse(localStorage.getItem("userLogin") || "false"),
+  status: localStorage.getItem("userLogin") ? JSON.parse(localStorage.getItem("userLogin") || "false") : false,
 };
 
 export const userInfoSlice = createSlice({
