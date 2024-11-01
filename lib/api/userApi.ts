@@ -1,67 +1,55 @@
-import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
-import { ErrorState, UserState } from "../../type/UserTypes";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Product, ProductsResponse } from "../../app/type/ProductTypes";
 
-interface DataState {
-  username: string;
-  email: string;
-  password: string;
-  _id?: string;
+interface QueryParams {
+  limit: string;
+  skip: string;
+  sortBy?: string;
+  order?: string;
+  q?: string;
 }
 
-interface LogoutResponse {
-  message: string;
-}
-
-export const userApi = createApi({
-  reducerPath: "userApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/belcor/user" }),
-  tagTypes: ["UserProfile"],
+export const productsApi = createApi({
+  reducerPath: "products",
+  baseQuery: fetchBaseQuery({ baseUrl: "https://dummyjson.com/" }),
   endpoints: (builder) => ({
-    registerUser: builder.mutation<UserState, DataState | ErrorState>({
-      query: (data) => ({
-        url: "",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["UserProfile"],
-    }),
-    loginUser: builder.mutation<UserState, DataState | ErrorState>({
-      query: (data) => ({
-        url: "/auth",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["UserProfile"],
-    }),
+    getAllProducts: builder.query<ProductsResponse, { limit?: number, skip?: number, filter?: string, sortBy?: string, order?: string, search?: string }>({
+      query: ({ limit = 30, skip = 0, filter = "", sortBy = "", order = "", search = "" }) => {
+        const queryParams: QueryParams = {
+          limit: limit.toString(),
+          skip: skip.toString(),
+        };
 
-    getProfileUser: builder.query<UserState, void>({
-      query: () => ({
-        url: "/profile",
-      }),
-      providesTags: ["UserProfile"],
-    }),
+        if (sortBy) queryParams.sortBy = sortBy;
+        if (order) queryParams.order = order;
 
-    updateUserProfile: builder.mutation<UserState, DataState>({
-      query: (data) => ({
-        url: "/profile",
-        method: "PUT",
-        body: data,
-      }),
-      invalidatesTags: ["UserProfile"],
+        if (search) {
+          queryParams.q = search;
+          return {
+            url: `/products/search`,
+            params: queryParams,
+          };
+        }
+        if (filter) {
+          search = "";
+        }
+        const filterPath = filter ? `/category/${filter}` : "";
+        return {
+          url: `/products${filterPath}`,
+          params: queryParams,
+        };
+      },
     }),
-    logOutUser: builder.mutation<LogoutResponse, void>({
-      query: () => ({
-        url: "/logout",
-        method: "POST",
-      }),
+    getHightRaiting: builder.query<ProductsResponse, void>({
+      query: () => '/products?limit=11&sortBy=rating&order=desc'
     }),
+    getSingleProduct: builder.query<Product, { id: string | undefined }>({
+      query: ({ id }) => `/products/${id}`
+    }),
+    getAllCategoryList: builder.query<string[], void>({
+      query: () => "/products/category-list"
+    })
   }),
-});
+})
 
-export const {
-  useGetProfileUserQuery,
-  useUpdateUserProfileMutation,
-  useRegisterUserMutation,
-  useLoginUserMutation,
-  useLogOutUserMutation,
-} = userApi;
+export const { useGetAllProductsQuery, useGetHightRaitingQuery, useGetSingleProductQuery, useGetAllCategoryListQuery } = productsApi
