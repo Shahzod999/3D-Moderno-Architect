@@ -43,6 +43,7 @@ const Profile = () => {
   const handleLogOut = async () => {
     logout();
     dispatch(userLogOut());
+    handleMenuClose();
   };
 
   console.log(userInfo, "info");
@@ -67,14 +68,14 @@ const Profile = () => {
       {userInfo ? (
         <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
       ) : (
-        <Link href="/protectedPages/profile">
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-        </Link>
+        <MenuItem component={Link} href="/protectedPages/profile" onClick={handleMenuClose}>
+          Profile
+        </MenuItem>
       )}
 
-      <Link href="/protectedPages/user">
-        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      </Link>
+      <MenuItem component={Link} href="/protectedPages/user" onClick={handleMenuClose}>
+        My account
+      </MenuItem>
     </Menu>
   );
 
@@ -95,26 +96,22 @@ const Profile = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
       sx={{ mt: 5 }}>
-      <Link href="/protectedPages/user">
-        <MenuItem>
-          <IconButton size="large" aria-label="show 0 new mails" color="inherit">
-            <Badge badgeContent={0} color="error">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-      </Link>
-      <Link href="/protectedPages/user">
-        <MenuItem>
-          <IconButton size="large" aria-label="show 0 new notifications" color="inherit">
-            <Badge badgeContent={0} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-      </Link>
+      <MenuItem component={Link} href="/protectedPages/user">
+        <IconButton size="large" aria-label="show 0 new mails" color="inherit">
+          <Badge badgeContent={0} color="error">
+            <MailIcon />
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem component={Link} href="/protectedPages/user">
+        <IconButton size="large" aria-label="show 0 new notifications" color="inherit">
+          <Badge badgeContent={0} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
 
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton size="large" aria-label="account of current user" aria-controls="primary-search-account-menu" aria-haspopup="true" color="inherit">
@@ -128,12 +125,13 @@ const Profile = () => {
   return (
     <>
       <Box sx={{ display: { xs: "none", md: "flex" } }}>
-        <IconButton size="large" aria-label="show 0 new mails" color="inherit">
+        <IconButton size="large" aria-label="show 0 new mails" color="inherit" component={Link} href="/protectedPages/user">
           <Badge badgeContent={0} color="error">
             <MailIcon />
           </Badge>
         </IconButton>
-        <IconButton size="large" aria-label="show 0 new notifications" color="inherit">
+
+        <IconButton size="large" aria-label="show 0 new notifications" color="inherit" component={Link} href="/protectedPages/user">
           <Badge badgeContent={0} color="error">
             <NotificationsIcon />
           </Badge>
